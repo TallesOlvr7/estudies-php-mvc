@@ -4,7 +4,7 @@ namespace app\core;
 
 //instanciar cada Model criado
 
-class controller
+class Controller
 {
     public function model($model)
     {

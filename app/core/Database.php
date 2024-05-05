@@ -17,7 +17,6 @@ class Database extends PDO
     {
         $this->conn = new PDO("mysql:host=$this->DB_HOST;dbname=$this->DB_NAME", $this->DB_USER, $this->DB_PASSWORD);
     }
-
     private function setParams($stmt, $key, $value)
     {
         $stmt->bindParam($key, $value);

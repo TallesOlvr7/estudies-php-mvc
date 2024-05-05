@@ -2,7 +2,7 @@
 
 use app\core\Controller;
 
-class HomeController extends Controller
+class Home extends Controller
 {
     public function index()
     {
