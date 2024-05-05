@@ -2,11 +2,6 @@
 
 namespace app\core;
 
-
-/**
- * Esta classe é responsável por obter da URL o controller, método (ação) e os parâmetros
- * e verificar a existência dos mesmo.
- */
 class App
 {
   protected $controller = 'Home';
@@ -21,7 +16,6 @@ class App
     $this->getMethodFromUrl($URL_ARRAY);
     $this->getParamsFromUrl($URL_ARRAY);
 
-    // chama um método de uma classe passando os parâmetros
     call_user_func_array([$this->controller, $this->method], $this->params);
   }
 
