@@ -2,6 +2,6 @@
     Home
 </h1>
 
-<a href="/profile">
-    Ir para o perfil
+<a href="/login">
+    Ir para o login
 </a>
