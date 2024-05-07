@@ -13,7 +13,6 @@
         use app\core\Controller;
 
         $app = new App();
-
         
     ?>
     

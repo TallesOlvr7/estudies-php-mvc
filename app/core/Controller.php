@@ -3,6 +3,7 @@
 namespace app\core;
 
 //instanciar cada Model criado
+use app\models\User;
 
 class Controller
 {
