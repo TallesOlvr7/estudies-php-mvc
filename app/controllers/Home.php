@@ -2,6 +2,7 @@
 
 use app\core\Controller;
 use app\classes\Session;
+use app\classes\Authorization;
 
 class Home extends Controller
 {
@@ -13,17 +14,15 @@ class Home extends Controller
         }else{
             $userInfo = $_SESSION['userData'];
             $userType = $userInfo['usu_tipo'];
+            $autorizzthion = new Authorization();
 
-            $this->typeVerify($userType);
+            if($autorizzthion->typeVerify($userType)){
+                $this->view('home/adm');
+            }else{
+                $this->view('home/index');
+            }
         }
     }
 
-    private function typeVerify($type)
-    {
-        if($type == "Secretaria"){
-            return $this->view("home/adm");
-        }else{
-            return $this->view("home/index");
-        }
-    }
+
 }

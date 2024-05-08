@@ -18,7 +18,7 @@ class Login extends Controller
             if ($this->verify($_POST['email'], $_POST['password'])) {
                 $user = new User();
                 $user->setEmail($_POST['email']);
-                $user->setPassword($_POST['password']);
+                $user->setPassword(md5(($_POST['password'])));
                 if ($user->authenticate($user->getEmail(), $user->getPassword())) {
                     Session::start();
                     $_SESSION['userData'] = $user->getUserData();
