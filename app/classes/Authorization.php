@@ -1,6 +1,7 @@
 <?php
 
 namespace app\classes;
+use app\classes\Session;
 
 class Authorization
 {
@@ -11,5 +12,13 @@ class Authorization
         }else{
             return false;
         }
-    }  
+    }
+    
+    public function loggedVerify()
+    {
+        Session::start();
+        if(!isset($_SESSION['userData'])){
+            return true;
+        }
+    }
 }

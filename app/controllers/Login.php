@@ -44,12 +44,6 @@ class Login extends Controller
         header("Location: /");
     }
 
-    public static function loggedVerify()
-    {
-        Session::start();
-        if(!isset($_SESSION['userData']));
-        header("Location /login");
-    }
     public function index()
     {
         $this->view("login/index");
