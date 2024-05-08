@@ -1,50 +1,54 @@
 <?php
 
 use app\core\Controller;
+use app\classes\Session;
 use app\models\User;
 
 class Login extends Controller
 {
-
-    private $verifiedInfos;
-
-    public function __construct()
-    {
-        $this->verifiedInfos = false;
-
-    }
-
-    private function getVerified()
-    {
-        return $this->verifiedInfos;
-    }
-
     private function verify($email, $password)
     {
         if (!empty($email) && !empty($password)) {
-            $this->verifiedInfos = true;
+            return true;
         }
     }
     public function sigin()
     {
         if (isset($_POST['email']) && isset($_POST['password'])) {
-            $user = new User();
-            $this->verify($_POST['email'], $_POST['password']);
-            if ($this->getVerified() == true) {
+            if ($this->verify($_POST['email'], $_POST['password'])) {
+                $user = new User();
                 $user->setEmail($_POST['email']);
                 $user->setPassword($_POST['password']);
-                $this->view("login/sigin", [
-                    'email' => $user->getEmail(),
-                    'password' => $user->getPassword()
-                ]);
+                if ($user->authenticate($user->getEmail(), $user->getPassword())) {
+                    Session::start();
+                    $_SESSION['userData'] = $user->getUserData();
+                    header("Location: /");
+                } else {
+                    $this->view('login/index', [
+                        'error' => 'E-mail ou senha incorretos'
+                    ]);
+                }
             } else {
                 $this->view('login/index', [
-                    'error' => 'E-mail ou Senha não foram inseridos'
+                    'error' => 'E-mail ou senha não foram inseridos'
                 ]);
             }
-        }else{
+        } else {
             $this->view('login/index');
         }
+    }
+
+    public function logout()
+    {
+        Session::destroy();
+        header("Location: /");
+    }
+
+    public static function loggedVerify()
+    {
+        Session::start();
+        if(!isset($_SESSION['userData']));
+        header("Location /login");
     }
     public function index()
     {

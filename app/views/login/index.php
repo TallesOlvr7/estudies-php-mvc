@@ -17,7 +17,3 @@
         echo($data['error']);
     }
 ?>
-
-<a href="/home">
-    Voltar para a home
-</a>

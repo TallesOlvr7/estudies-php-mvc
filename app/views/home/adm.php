@@ -1,5 +1,5 @@
 <h1>
-    HomeAluno
+    HomeAdm
 </h1>
 
 <a href='/login/logout'>

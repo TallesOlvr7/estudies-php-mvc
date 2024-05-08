@@ -11,8 +11,11 @@
 
         use app\core\App;
         use app\core\Controller;
+        use app\classes\Session;
+        Session::start();
 
         $app = new App();
+
         
     ?>
     
