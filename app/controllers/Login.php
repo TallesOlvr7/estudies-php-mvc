@@ -6,12 +6,11 @@ use app\models\User;
 
 class Login extends Controller
 {
-    private function verify($email, $password)
+    public function index()
     {
-        if (!empty($email) && !empty($password)) {
-            return true;
-        }
+        $this->view("login/index");
     }
+    
     public function sigin()
     {
         if (isset($_POST['email']) && isset($_POST['password'])) {
@@ -44,8 +43,10 @@ class Login extends Controller
         header("Location: /");
     }
 
-    public function index()
+    private function verify($email, $password)
     {
-        $this->view("login/index");
+        if (!empty($email) && !empty($password)) {
+            return true;
+        }
     }
 }
