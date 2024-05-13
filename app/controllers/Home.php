@@ -1,15 +1,13 @@
 <?php
 
 use app\core\Controller;
-use app\classes\Session;
-use app\classes\Authorization;
+use app\models\User;
 
 class Home extends Controller
 {
     public function index()
     {
-        $autorizathion = new Authorization();
-        Session::start();
+        $autorizathion = new User();
         if($autorizathion->loggedVerify()){
             header("Location: /login");
         }else{
