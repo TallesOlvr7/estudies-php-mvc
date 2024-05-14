@@ -13,9 +13,7 @@ class Session
 
     public static function destroy()
     {
-        if(!isset($_SESSION)){
-            session_start();
-        }
+        self::start();
 
         if(isset($_SESSION['userData'])){
             unset($_SESSION['userData']);

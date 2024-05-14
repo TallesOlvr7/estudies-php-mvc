@@ -25,6 +25,10 @@
     if(isset($data['error'])){
         echo($data['error']);
     }
+
+    if(isset($data['success'])){
+        echo($data['success']);
+    }
 ?>
 
 <a href='/home'>

@@ -2,6 +2,7 @@
 
 use app\core\Controller;
 use app\models\User;
+use app\classes\Date;
 
 class Register extends Controller
 {
@@ -26,7 +27,18 @@ class Register extends Controller
     {
         if (isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['ra']) && isset($_POST['cpf']) && isset($_POST['nascimento'])) {
             if ($this->verifyInputsForm($_POST['nome'], $_POST['email'], $_POST['ra'], $_POST['cpf'], $_POST['nascimento'])) {
-
+                $user = new User();
+                $user->setNome($_POST['nome']);
+                $user->setEmail($_POST['email']);
+                $user->setRa($_POST['ra']);
+                $user->setCpf($_POST['cpf']);
+                $user->setNascimento($_POST['nascimento']);
+                $user->setDataDeCadastro(Date::atualDateAndHour());
+                if($user->registerUser()){
+                    $this->view("register/index", [
+                        "success" => "Usuáro cadastrado com sucesso"
+                    ]);
+                }
             } else {
                 $this->view("register/index", [
                     "error" => "Preencha com valores válidos"

@@ -18,7 +18,7 @@ class Login extends Controller
                 $user = new User();
                 $user->setEmail($_POST['email']);
                 $user->setPassword(md5(($_POST['password'])));
-                if ($user->authenticate($user->getEmail(), $user->getPassword())) {
+                if ($user->authenticate()) {
                     Session::start();
                     $_SESSION['userData'] = $user->getUserData();
                     header("Location: /");
