@@ -38,18 +38,20 @@ class User
             $this->setFirstPassword($this->getCpf());
 
             $db = new Database();
-            $register = $db->executeQuerry("INSERT INTO usuarios(usu_nome_completo,usu_email,usu_senha,usu_ra,usu_cpf,usu_data_nascimento,usu_data_de_criacao)VALUES(:nome,:email,:senha,:ra,:cpf,:dataNascimento,:dataDeCadastro)",array(
-                'nome'=>$this->getNome(),
-                'email'=>$this->getEmail(),
-                'senha'=>md5($this->getPassword()),
-                'ra'=>$this->getRa(),
-                'cpf'=>md5($this->getCpf()),
-                'dataNascimento'=>$this->getNascimento(),
-                'dataDeCadastro'=>$this->getDataDeCadastro()
-            ));
-            return true;
-        }else{
-            return false;
+            if(
+                $register = $db->executeQuerry("INSERT INTO usuarios(usu_nome_completo,usu_email,usu_senha,usu_ra,usu_cpf,usu_data_nascimento,usu_data_de_criacao)VALUES(:nome,:email,:senha,:ra,:cpf,:dataNascimento,:dataDeCadastro)",array(
+                    'nome'=>$this->getNome(),
+                    'email'=>$this->getEmail(),
+                    'senha'=>md5($this->getPassword()),
+                    'ra'=>$this->getRa(),
+                    'cpf'=>md5($this->getCpf()),
+                    'dataNascimento'=>$this->getNascimento(),
+                    'dataDeCadastro'=>$this->getDataDeCadastro()
+                ))
+            ){
+                return true;
+            }
+
         }
     }
 
