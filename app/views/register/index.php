@@ -31,6 +31,11 @@
     }
 ?>
 
+<br>
+<br>
+
+<a href="assets/files/Planilha para cadastro de alunos-BibliotecaDoSaber.xlsx"download>Download excel</a>
+
 <a href='/home'>
     Voltar
 </a> <br>
