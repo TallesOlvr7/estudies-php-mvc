@@ -49,6 +49,26 @@ class Register extends Controller
         }
     }
 
+    public function subtmitByFile()
+    {
+        if(isset($_POST['arquivo'])){
+            if($this->verifyInputFile($_POST['arquivo'])){
+
+            }else{
+                $this->view("register/index", [
+                    "error"=>"Envie a planilha de excel"
+                ]);
+            }
+        } else{
+            $this->view("error404"); 
+        }
+    }
+
+    private function verifyInputFile($arquivo)
+    {
+        return !empty($arquivo);
+    }
+
     private function verifyInputsForm($nome, $email, $ra, $cpf, $nascimento)
     {
         if (!empty($nome) && !empty($email) && !empty($ra) && !empty($cpf) && !empty($nascimento)) {

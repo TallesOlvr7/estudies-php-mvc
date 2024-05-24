@@ -34,7 +34,12 @@
 <br>
 <br>
 
-<a href="assets/files/Planilha para cadastro de alunos-BibliotecaDoSaber.xlsx"download>Download excel</a>
+<a href="assets/files/Planilha para cadastro de alunos-BibliotecaDoSaber.xlsx"download>Download excel</a> <br> <br>
+
+<form action="/register/submitByFile" enctyenctype="multipart/form-data" method="post">
+    <input type="file" name="arquivo" id="arquivo"><br>
+    <input type="submit" value="Enviar excel">
+</form>
 
 <a href='/home'>
     Voltar
