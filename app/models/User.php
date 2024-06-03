@@ -20,10 +20,12 @@ class User
     public function authenticate()
     {
         $db = new Database();
-        $userLoginRequest = $db->executeQuerry("SELECT * FROM usuarios WHERE usu_email = :email AND usu_senha = :password", array(
-            'email' => $this->getEmail(),
-            'password' => $this->getPassword()
-        )
+        $userLoginRequest = $db->executeQuerry(
+            "SELECT * FROM usuarios WHERE usu_email = :email AND usu_senha = :password",
+            array(
+                'email' => $this->getEmail(),
+                'password' => $this->getPassword()
+            )
         );
 
         if ($userLoginRequest->rowCount() == 1) {
@@ -32,26 +34,57 @@ class User
         }
     }
 
-    public function registerUser()
+    public function registerUser($ra,$cpf)
     {
-        if($this->getCpf() || $this->getNascimento()){
+        if ($this->verifyRa($ra) &&  $this->verifyCpf($cpf) && $this->getNascimento()) {
             $this->setFirstPassword($this->getCpf());
 
             $db = new Database();
-            if(
-                $register = $db->executeQuerry("INSERT INTO usuarios(usu_nome_completo,usu_email,usu_senha,usu_ra,usu_cpf,usu_data_nascimento,usu_data_de_criacao)VALUES(:nome,:email,:senha,:ra,:cpf,:dataNascimento,:dataDeCadastro)",array(
-                    'nome'=>$this->getNome(),
-                    'email'=>$this->getEmail(),
-                    'senha'=>md5($this->getPassword()),
-                    'ra'=>$this->getRa(),
-                    'cpf'=>md5($this->getCpf()),
-                    'dataNascimento'=>$this->getNascimento(),
-                    'dataDeCadastro'=>$this->getDataDeCadastro()
-                ))
-            ){
+            if (
+                $register = $db->executeQuerry("INSERT INTO usuarios(usu_nome_completo,usu_email,usu_senha,usu_ra,usu_cpf,usu_data_nascimento,usu_data_de_criacao)VALUES(:nome,:email,:senha,:ra,:cpf,:dataNascimento,:dataDeCadastro)", array(
+                    'nome' => $this->getNome(),
+                    'email' => $this->getEmail(),
+                    'senha' => md5($this->getPassword()),
+                    'ra' => $this->getRa(),
+                    'cpf' => md5($this->getCpf()),
+                    'dataNascimento' => $this->getNascimento(),
+                    'dataDeCadastro' => $this->getDataDeCadastro()
+                )
+                )
+            )
                 return true;
-            }
+        }else{
+            return false;
+        }
+    }
 
+    private function verifyCpf($cpf)
+    {
+        $cpfSubmited = $cpf;
+        $db = new Database();
+        $getCpf = $db->executeQuerry("SELECT * FROM usuarios WHERE usu_cpf = :cpf", array(
+            'cpf' => $cpfSubmited
+        ));
+
+        if ($getCpf->rowCount() < 1) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private function verifyRa($ra)
+    {
+        $raSubmited = $ra;
+        $db = new Database();
+        $getRa = $db->executeQuerry("SELECT * FROM usuarios WHERE usu_ra = :ra", array(
+            'cpf' => $raSubmited
+        ));
+
+        if ($getRa->rowCount() < 1) {
+            return false;
+        }else{
+            return true;
         }
     }
 
@@ -67,7 +100,7 @@ class User
     public function loggedVerify()
     {
         Session::start();
-        if(!isset($_SESSION['userData'])){
+        if (!isset($_SESSION['userData'])) {
             return true;
         }
     }
@@ -90,8 +123,8 @@ class User
     public function setFirstPassword($cpf)
     {
         $cpfLimpo = trim($cpf);
-        $cpfLimpo = str_replace(array('.','-','/'), "",$cpfLimpo);
-        $this->password = $cpfLimpo."sp";
+        $cpfLimpo = str_replace(array('.', '-', '/'), "", $cpfLimpo);
+        $this->password = $cpfLimpo . "sp";
     }
 
     public function setRa($ra)
@@ -101,9 +134,9 @@ class User
 
     public function setCpf($cpf)
     {
-        if(mb_strlen($cpf) == 13){
+        if (mb_strlen($cpf) == 13) {
             $this->cpf = $cpf;
-        }else{
+        } else {
             $this->cpf = false;
         }
 

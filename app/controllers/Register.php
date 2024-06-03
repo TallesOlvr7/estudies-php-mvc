@@ -34,9 +34,13 @@ class Register extends Controller
                 $user->setCpf($_POST['cpf']);
                 $user->setNascimento($_POST['nascimento']);
                 $user->setDataDeCadastro(Date::atualDateAndHour());
-                if($user->registerUser()){
+                if($user->registerUser($_POST['ra'],$_POST['cpf'])){
                     $this->view("register/index", [
                         "success" => "Usuáro cadastrado com sucesso"
+                    ]);
+                }else{
+                    $this->view("register/index", [
+                        "success" => "Valores inválidos ou repetidos"
                     ]);
                 }
             } else {
